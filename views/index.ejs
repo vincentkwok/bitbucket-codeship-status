@@ -21,7 +21,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-					<% if (BITBUCKET_USERNAME && BITBUCKET_PASSWORD) { %>
+					<% if (BITBUCKET_USERNAME) { %>
 						<% if (authenticated) { %>
 							<div class="alert alert-success" role="alert">App is running and has access to Bitbucket!</div>
 						<% } else { %>
@@ -82,11 +82,11 @@
 			</div>
 			
 			<hr>
-			
+
 			<div class="row">
 				<div class="col-md-6">
 					<h4>
-						<% if (BITBUCKET_PASSWORD) { %>
+						<% if (OAUTH_KEY) { %>
 							<span class="label label-success">Success</span>
 						<% } else { %>
 							<span class="label label-danger">Missing</span>
@@ -94,14 +94,39 @@
 						<div class="visible-xs">
 							<br>
 						</div>
-						BITBUCKET_PASSWORD
+						OAUTH_KEY
 					</h4>
 				</div>
 				<div class="col-md-6">
-					<% if (BITBUCKET_PASSWORD) { %>
-						<h4><small>ENV variable is set, but it's a secret!</small></h4>
+					<% if (OAUTH_KEY) { %>
+						<h4><small>Good, set.</small></h4>
 					<% } else { %>
-						<h4><small>You still need to set the <span class="label label-default">BITBUCKET_PASSWORD</span> ENV variable.</small></h4>
+						<h4><small>You still need to set the <span class="label label-default">OAUTH_KEY</span> ENV variable.</small></h4>
+					<% } %>
+				</div>
+			</div>
+			
+			<hr>
+
+			<div class="row">
+				<div class="col-md-6">
+					<h4>
+						<% if (OAUTH_SECRET) { %>
+							<span class="label label-success">Success</span>
+						<% } else { %>
+							<span class="label label-danger">Missing</span>
+						<% } %>
+						<div class="visible-xs">
+							<br>
+						</div>
+						OAUTH_SECRET
+					</h4>
+				</div>
+				<div class="col-md-6">
+					<% if (OAUTH_SECRET) { %>
+						<h4><small>Good, set.</small></h4>
+					<% } else { %>
+						<h4><small>You still need to set the <span class="label label-default">OAUTH_SECRET</span> ENV variable.</small></h4>
 					<% } %>
 				</div>
 			</div>
@@ -112,7 +137,7 @@
 				<div class="col-xs-12">
 					<h3>Setup</h3>
 					<ol>
-						<% if (!BITBUCKET_USERNAME || !BITBUCKET_PASSWORD) { %>
+						<% if (!BITBUCKET_USERNAME) { %>
 							<li>
 								<p>Create an API Key in Bitbucket for your team and use your team name as the <strong>username</strong> and the API Key as your <strong>password</strong> in the next step.</p>
 							</li>

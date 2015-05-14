@@ -9,15 +9,22 @@ module.exports = function () {
 	app.use(bodyParser.json());
 	app.set('view engine', 'ejs');
 	app.enable('trust proxy');
-	
+
 	app.get('/', function (req, res) {
+		var oauth = {
+			consumer_key: process.env.OAUTH_KEY,
+			consumer_secret: process.env.OAUTH_SECRET
+		}
+
 		Request({
-			url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/users/chesleybrown',
-			method: 'GET'
+			url: 'https://api.bitbucket.org/2.0/users/' + process.env.BITBUCKET_USERNAME,
+			method: 'GET',
+			oauth: oauth
 		}, function (err, response, body) {
 			res.render('index', {
 				BITBUCKET_USERNAME: process.env.BITBUCKET_USERNAME,
-				BITBUCKET_PASSWORD: Boolean(process.env.BITBUCKET_PASSWORD),
+				OAUTH_KEY: process.env.OAUTH_KEY,
+				OAUTH_SECRET: process.env.OAUTH_SECRET,
 				ssl: (req.protocol === 'https') ? true : false,
 				host: req.get('host'),
 				authenticated: (err || response.statusCode !== 200) ? false : true
