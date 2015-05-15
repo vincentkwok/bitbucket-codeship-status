@@ -33,7 +33,7 @@ module.exports = function () {
 	});
 	
 	app.post('/pull-request/:codeshipProjectUuid/:codeshipProjectId', basicAuth(function (username, password) {
-		return (username === process.env.BITBUCKET_USERNAME && password === process.env.BITBUCKET_PASSWORD);
+		return (username === process.env.BITBUCKET_USERNAME && password === process.env.OAUTH_KEY);
 	}), function (req, res) {
 		if (Object.keys(req.body).length === 0) {
 			res.status(400).end();
