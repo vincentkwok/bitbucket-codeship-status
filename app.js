@@ -10,16 +10,18 @@ module.exports = function () {
 	app.set('view engine', 'ejs');
 	app.enable('trust proxy');
 
-	app.get('/', function (req, res) {
-		var oauth = {
+	function oauth () {
+		return {
 			consumer_key: process.env.OAUTH_KEY,
 			consumer_secret: process.env.OAUTH_SECRET
-		}
+		};
+	}
 
+	app.get('/', function (req, res) {
 		Request({
 			url: 'https://api.bitbucket.org/2.0/users/' + process.env.BITBUCKET_USERNAME,
 			method: 'GET',
-			oauth: oauth
+			oauth: oauth()
 		}, function (err, response, body) {
 			res.render('index', {
 				BITBUCKET_USERNAME: process.env.BITBUCKET_USERNAME,
@@ -58,8 +60,9 @@ module.exports = function () {
 			pullRequest.description = widget + '\r\n\r\n' + pullRequest.description;
 			
 			Request({
-				url: 'https://' + process.env.BITBUCKET_USERNAME + ':' + process.env.BITBUCKET_PASSWORD + '@api.bitbucket.org/2.0/repositories/' + pullRequest.source.repository.full_name + '/pullrequests/' + pullRequest.id,
+				url: 'https://api.bitbucket.org/2.0/repositories/' + pullRequest.source.repository.full_name + '/pullrequests/' + pullRequest.id,
 				method: 'PUT',
+				oauth: oauth(),
 				json: pullRequest
 			}, function (err, response, body) {
 				if (err) {
