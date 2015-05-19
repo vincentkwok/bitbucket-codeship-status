@@ -71,6 +71,8 @@ module.exports = function () {
 				}
 				
 				if (response.body && response.body.error) {
+					console.log('response.body', response.body);
+					console.log('response.body.error', response.body.error);
 					res.status(500).end();
 					return;
 				}
