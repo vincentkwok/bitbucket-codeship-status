@@ -54,8 +54,9 @@ module.exports = function () {
 				} else {
 					var body = JSON.parse(response.body);
 					var codeshipBuildId = getCodeshipBuildId(body, buildCommitSha);
-
-					deferred.resolve(baseWidgetUrl + '/builds/' + codeshipBuildId);
+					var widgetUrl = (!codeshipBuildId)? baseWidgetUrl : baseWidgetUrl + '/builds/' + codeshipBuildId;
+					
+					deferred.resolve(widgetUrl);
 				}
 			});
 		}
