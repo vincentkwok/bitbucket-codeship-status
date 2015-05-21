@@ -29,7 +29,7 @@ module.exports = function () {
 		var codeshipBuildId = null;
 
 		responseBody.builds.forEach(function (build, index) {
-			if (buildCommitSha.indexOf(build.commit_id) === 0) {
+			if (build.commit_id.indexOf(buildCommitSha) === 0) {
 				codeshipBuildId = build.id;
 			}
 		});
